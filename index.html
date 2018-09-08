@@ -11,12 +11,12 @@
 
 <body>
   <div id="appTareas">
-    <input type="text" placeholder="Ingresar tarea..." v-model="txtTarea">
+    <input type="text" placeholder="Ingresar tarea..." v-model="txtTarea" >
     <button v-on:click="agregarTarea" type="button" name="button">Agregar tarea!</button>
-    <ul>
+    <ul v-for="tarea in listaTareas">
       <li>
-        <input type="checkbox" name="" value="">
-        <label>Descripción de la tarea...</label>
+        <input type="checkbox" name="" value="" v-model="txtTarea.checked" >
+        <label>{{tarea.texto}}</label>
         <button type="button" name="button">X</button>
       </li>
     </ul>
