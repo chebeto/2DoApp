@@ -5,42 +5,63 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>My 2Do app with Vue.js</title>
+  <title>My 2Do app with Vue.js & Semantic UI</title>
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.css">
+  <style media="screen">
+    ul{
+      list-style-type: none;
+      padding-left: 0px;
+    }
+  </style>
 </head>
 
 <body>
-  <div id="appTareas">
-    <input type="text" placeholder="Ingresar tarea..." v-model="txtTarea" >
-    <button v-on:click="agregarTarea" type="button" name="button">Agregar tarea!</button>
+  <div class="ui container" id="appTareas">
+    <br>
+    <br>
+    <div class="ui fluid right action input">
+      <input type="text" placeholder="Ingresar tarea" autofocus v-on:keyup.enter="agregarTarea" v-model="txtTarea" >
+      <button class="ui teal right labeled icon button" v-on:click="agregarTarea" type="button" name="button">
+        <i class="add square icon"></i>
+        Agregar tarea!</button>
+    </div>
     <ul v-for="tarea in listaTareas">
       <li>
-        <input type="checkbox" name="" value="" v-model="txtTarea.checked" >
-        <label>{{tarea.texto}}</label>
-        <button type="button" name="button">X</button>
+        <div class="ui clearing red segment" v-bind:class="{disabled:tarea.checked}">
+          <input type="checkbox" name="" value="" v-model="tarea.checked" >
+          <label class="ui label teal horizontal" v-bind:class="{disabled:tarea.checked}">{{tarea.texto}}</label>
+          <button class="mini ui red right floated button" v-on:click="eliminarTarea(tarea)" type="button" name="button">
+            <i class="remove icon"></i>
+            Eliminar</button>
+        </div>
       </li>
     </ul>
   </div>
   <script>
     new Vue({
-      el:"#appTareas",
-      data:{
-        txtTarea:" ... ",
-        listaTareas:[]
+      el: "#appTareas",
+      data: {
+        txtTarea: " ",
+        listaTareas: []
       },
       // Acciones de agregar y eliminar tareas
-      methods:{
-        agregarTarea:function() {
-          var tarea= this.txtTarea.trim();
+      methods: {
+        // Funcion para agregar tareas
+        agregarTarea: function() {
+          var tarea = this.txtTarea.trim();
           if (tarea) {
             this.listaTareas.push({
-              texto:tarea,
-              checked:false
+              texto: tarea,
+              checked: false
             });
           }
-          this.txtTarea="";
-          alert("Tarea agregada!");
-          console.log(this.listaTareas);
+          this.txtTarea = "";
+        },
+        // Funcion para eliminar tareas
+        eliminarTarea: function(tarea) {
+          var index = this.listaTareas.indexOf(tarea);
+          this.listaTareas.splice(index, 1);
         }
       }
     });
