@@ -1,12 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>My 2Do app with Vue.js</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 </head>
-<body>
 
+<body>
+  <div id="appTareas">
+    <input type="text" placeholder="Ingresar tarea..." v-model="txtTarea">
+    <button v-on:click="agregarTarea" type="button" name="button">Agregar tarea!</button>
+    <ul>
+      <li>
+        <input type="checkbox" name="" value="">
+        <label>Descripción de la tarea...</label>
+        <button type="button" name="button">X</button>
+      </li>
+    </ul>
+  </div>
+  <script>
+    new Vue({
+      el:"#appTareas",
+      data:{
+        txtTarea:" ... ",
+        listaTareas:[]
+      },
+      // Acciones de agregar y eliminar tareas
+      methods:{
+        agregarTarea:function() {
+          var tarea= this.txtTarea.trim();
+          if (tarea) {
+            this.listaTareas.push({
+              texto:tarea,
+              checked:false
+            });
+          }
+          this.txtTarea="";
+          alert("Tarea agregada!");
+          console.log(this.listaTareas);
+        }
+      }
+    });
+  </script>
 </body>
+
 </html>
